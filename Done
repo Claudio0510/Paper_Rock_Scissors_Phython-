@@ -1,0 +1,248 @@
+import tkinter as tk
+import cv2
+from PIL import Image, ImageTk  # Importa Image y ImageTk desde PIL
+import random
+import time
+
+#Bools
+On_Paper = False
+On_Scissors = False
+On_Rock = False
+
+
+
+def Remove_Rock_Result():
+   
+    
+  
+    label_rock_Result.destroy
+    
+def Remove_Paper_Result():
+    
+    
+
+    label_paper_Result.destroy
+    
+def Remove_Scissors_Result():
+
+
+    label_scissors_Result.destroy
+
+
+#Resize the label rock
+def Resize_Rock(event):
+    global On_Rock
+    label_rock.config(width=400, height=400)
+    On_Rock = True
+
+    
+#Resize the label paper
+def Resize_Paper(event):
+     global On_Paper
+     label_paper.config(width= 400 , height= 400)
+     On_Paper = True
+  
+
+#Resize the label scissors
+def Resize_Scissors(event):
+    global On_Scissors
+    label_scissors.config(width= 400 , height= 400)
+    On_Scissors = True
+   
+#Return the original size label of rock 
+def Resize_Original_Rock(event):
+    global On_Rock
+    label_rock.config(width=350 , height= 350)
+    On_Rock = False
+    
+#Return the original size label of rock 
+def Resize_Original_Paper(event):
+    global On_Paper
+    label_paper.config(width=350 , height= 350)
+    On_Paper = False
+
+#Return the original size label of rock 
+def Resize_Original_Scissors(event):
+    global On_Scissors
+    label_scissors.config(width=350 , height= 350)
+    On_Scissors = False
+    
+#Know if the left click is being pressed 
+def left_clic(event):
+    
+    global On_Scissors
+    global On_Rock
+    global On_Paper
+    
+    
+    #To make the labels globals 
+    global label_paper_Result
+    global label_rock_Result
+    global label_scissors_Result
+    
+    #Scissors
+    if event.num == 1 and On_Scissors:
+        
+        #Make the random number 
+        Random_Number_1 = random.randint(1,3)
+        
+        #To know what to realease
+        
+        if Random_Number_1 == 1:
+            
+            
+            label_paper_Result = tk.Label(ventana, image=Paper_Photo , width=350, height=350)
+            label_paper_Result.place(x = 700, y = 100)
+            
+            #To change the color of the background 
+            ventana.configure(bg = "green")
+            
+            #To call the function to remove the label
+            Remove_Paper_Result()
+            
+            
+            
+        if Random_Number_1 == 2:
+            label_scissors_Result = tk.Label(ventana, image=Scissors_Photo , width=350, height=350)
+            label_scissors_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "white")
+            
+            #To call the function to remove the label
+            Remove_Scissors_Result()
+            
+            
+        if Random_Number_1 == 3:
+            label_rock_Result = tk.Label(ventana, image=Rock_Photo , width=350, height=350)
+            label_rock_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "red")
+            #To call the function to remove the label
+            Remove_Rock_Result()
+
+     
+    
+    #Rock
+    if event.num == 1 and On_Rock:
+        
+        #Make the random number 
+        Random_Number_2 = random.randint(1,3)
+        
+        
+        #To know what to realease
+        
+        if Random_Number_2 == 1:
+            label_paper_Result = tk.Label(ventana, image=Paper_Photo , width=350, height=350)
+            label_paper_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "red")
+            
+            Remove_Paper_Result()
+            
+        if Random_Number_2 == 2:
+            label_scissors_Result = tk.Label(ventana, image=Scissors_Photo , width=350, height=350)
+            label_scissors_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "green")
+            
+            Remove_Scissors_Result()
+            
+        if Random_Number_2 == 3:
+            label_rock_Result = tk.Label(ventana, image=Rock_Photo , width=350, height=350)
+            label_rock_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "white")
+            
+            Remove_Rock_Result()
+
+        
+        
+    #Paper
+    if event.num == 1 and On_Paper:
+              
+        #Make the random number 
+        Random_Number_3 = random.randint(1,3)
+        
+        
+        
+        #To know what to realease
+        
+        if Random_Number_3 == 1:
+            label_paper_Result = tk.Label(ventana, image=Paper_Photo , width=350, height=350)
+            label_paper_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "white")
+            
+            Remove_Paper_Result()
+            
+        if Random_Number_3 == 2:
+            label_scissors_Result = tk.Label(ventana, image=Scissors_Photo , width=350, height=350)
+            label_scissors_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "red")
+            
+            Remove_Scissors_Result()
+            
+        if Random_Number_3 == 3:
+            label_rock_Result = tk.Label(ventana, image=Rock_Photo , width=350, height=350)
+            label_rock_Result.place(x = 700, y = 100)
+            
+            ventana.configure(bg= "green")
+            
+            Remove_Rock_Result()
+
+
+
+# Crea una instancia de la ventana principal
+ventana = tk.Tk()
+
+# Configura atributos de la ventana
+ventana.title("Stone , Paper , Scissors")
+ventana.geometry("1920x1080")  # Tamaño: ancho x alto
+
+#Load images 
+Rock_Image = cv2.imread('C:/Users/claud/Desktop/Paper - Scissors - Stone/Rock.png')
+Scissors_Image = cv2.imread('C:/Users/claud/Desktop/Paper - Scissors - Stone/Scissors.png')
+Paper_Image = cv2.imread('C:/Users/claud/Desktop/Paper - Scissors - Stone/Paper.png')
+
+
+# Convierte las imágenes a formato compatible con Tkinter
+Rock_Image = cv2.cvtColor(Rock_Image, cv2.COLOR_BGR2RGB)  # OpenCV carga imágenes en formato BGR
+Rock_Photo = ImageTk.PhotoImage(Image.fromarray(Rock_Image))
+
+Scissors_Image = cv2.cvtColor(Scissors_Image, cv2.COLOR_BGR2RGB)
+Scissors_Photo = ImageTk.PhotoImage(Image.fromarray(Scissors_Image))
+
+Paper_Image = cv2.cvtColor(Paper_Image, cv2.COLOR_BGR2RGB)
+Paper_Photo = ImageTk.PhotoImage(Image.fromarray(Paper_Image))
+
+# Crea widgets Label para mostrar las imágenes
+label_rock = tk.Label(ventana, image=Rock_Photo , width=350, height=350)
+label_rock.place(x = 1400, y = 600)
+
+label_scissors = tk.Label(ventana, image=Scissors_Photo, width=350, height=350)
+label_scissors.place(x = 800, y = 600)
+
+
+label_paper = tk.Label(ventana, image=Paper_Photo,width=350, height=350)
+label_paper.place(x = 200, y = 600)
+
+
+#Create function to controll when the mouse is over the labels 
+label_paper.bind("<Enter>" , Resize_Paper )
+label_scissors.bind("<Enter>", Resize_Scissors )
+label_rock.bind("<Enter>", Resize_Rock )
+
+#To make smaller the labels 
+label_paper.bind("<Leave>" , Resize_Original_Paper)
+label_rock.bind("<Leave>" , Resize_Original_Rock)
+label_scissors.bind("<Leave>", Resize_Original_Scissors)
+
+# Asociar la función clic_derecho al evento <Button-3> (botón derecho del ratón)
+ventana.bind("<Button-1>", left_clic)
+
+
+
+
+# Ejecuta el bucle principal
+ventana.mainloop()
